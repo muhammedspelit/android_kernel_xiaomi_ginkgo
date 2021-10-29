@@ -160,7 +160,8 @@ static inline void binder_debug(uint32_t mask, const char *fmt, ...)
 
 #define binder_user_error(x...) \
 	do { \
-		pr_info_ratelimited(x); \
+		if (binder_debug_mask & BINDER_DEBUG_USER_ERROR) \
+ 			pr_info_ratelimited(x); \
 		if (binder_stop_on_user_error) \
 			binder_stop_on_user_error = 2; \
 	} while (0)
